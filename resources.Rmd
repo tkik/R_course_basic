@@ -11,3 +11,10 @@ https://adv-r.hadley.nz/
 https://www.r-exercises.com/start-here-to-learn-r/
 
 
+Packages to install
+
+`usethis`
+`workflowr`
+`devtools`
+`tidyverse`
+
