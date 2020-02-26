@@ -4,7 +4,7 @@ output: html_notebook
 ---
 
 
-##Clean data:
+## Clean data:
 - one data, one variable
 - one row per observation
 - data and type matches
@@ -14,12 +14,15 @@ output: html_notebook
 Exercise
 
 1. Clean up the following dataset, using base R:
+messy_data.xlsx
+
+```{r}
+
+```
 
 
 
-
-
-##Tidy data
+## Tidy data
 
 by Hadley Wickham
 - long over wide format
@@ -31,11 +34,58 @@ Examples:
 
 
 ```{r}
+library(dplyr)
+library(tidyr)
+library(tibble)
 data(mtcars)
 
+mtcars <- as_tibble(rownames_to_column(mtcars))
 
+filtered <-mtcars %>%
+  filter(gear<5) 
+
+filtered %>% 
+  group_by(carb) %>%
+  summarise(qsec_mean=mean(qsec))
+
+#it is possible to combine as many steps as needed without saving it in a separate object
+
+mtcars %>%
+  filter(gear<5) %>%
+  group_by(carb) %>%
+  summarise_all(list(sum=sum, mean=mean))
+
+mtcars %>%
+  mutate(cyl_2=if_else(cyl==8, 7, cyl))
+
+
+mtcars %>%
+  mutate(gear=gear-1)
+
+mtcars %>%
+  pivot_longer(-cars, names_to = "name", values_to = "values")
 
 ```
 
 
+2. Clean up the following dataset, using as much tidyverse as possible:
+messy_data.xlsx
+
+```{r}
+
+```
+
+
+## Merging data
+
+`merge()` funtction from base R
+`join()` function from tidyvers
+
+```{r}
+
+band_members %>% full_join(band_instruments)
+
+merge(band_members, band_instruments, by="name", all=T, sort=F)
+
+```
 
