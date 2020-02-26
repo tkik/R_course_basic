@@ -39,4 +39,31 @@ output: html_notebook
 ```
 
 
+## apply, lapply, etc...
+
+1. define the following dataset:
+
+```{r}
+dataset1 <- cbind(observationA = 16:8, observationB = c(20:19, 6:12))
+```
+
+2. Calculate row and column means with apply 
+3. Use apply to multiply the whole table by 3. 
+
+
+```{r}
+#two ways
+
+multiply <- function(x, number){
+  x <- x*number
+  x
+}
+res <- apply(dataset1,2, multiply, number=3)
+
+res <- apply(dataset1,2, function(x) x*3)
+
+```
+
+4. create a list with 3 list elements. print the length of each element. 
+
 

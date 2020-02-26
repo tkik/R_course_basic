@@ -6,15 +6,24 @@ output: html_notebook
 The following resources were used to prepare the slides and exercises:  
 
 https://bookdown.org/rdpeng/rprogdatascience/
+
 https://r4ds.had.co.nz/
+
 https://adv-r.hadley.nz/
+
 https://www.r-exercises.com/start-here-to-learn-r/
+
 
 
 Packages to install
 
 `usethis`
+
 `workflowr`
+
 `devtools`
+
 `tidyverse`
+
+`Bioconductor 3.10`
 
