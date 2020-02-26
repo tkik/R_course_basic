@@ -1,0 +1,17 @@
+---
+title: "Basic structure"
+output: html_notebook
+---
+
+General structure
+
+1. Basic R introduction
+2. Data types
+3. Control structures
+4. Functions
+5. Debugging
+6. Visualization - ggplot (1-day)
+7. Work with data frames - Data manipulation, tidying (1-day)
+8. Exploratory statistics 
+9. Work with S4 objects - GRanges, SummarizedExperiment - example data analysis (Gene expression) - (1 day)
+10. Reproducible research - good programming practice - (1 day)

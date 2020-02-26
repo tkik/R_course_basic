@@ -1,0 +1,41 @@
+---
+title: "Data cleaning, tidy data"
+output: html_notebook
+---
+
+
+##Clean data:
+- one data, one variable
+- one row per observation
+- data and type matches
+- same name for same categories
+- clean factors, if necessary
+
+Exercise
+
+1. Clean up the following dataset, using base R:
+
+
+
+
+
+##Tidy data
+
+by Hadley Wickham
+- long over wide format
+- data is in tibbles
+- tidyverse offers various functions to easily manipulate the data
+- new concept: piping.
+
+Examples:
+
+
+```{r}
+data(mtcars)
+
+
+
+```
+
+
+

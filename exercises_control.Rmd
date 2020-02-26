@@ -1,0 +1,42 @@
+---
+title: "Practice, control structures"
+output: html_notebook
+---
+
+## If-else statement
+
+1. load in the Orange dataset
+2. Create a new, empty variable
+3. Write an if else statement that classifies trees based on their circumference: 
+    <= 65.5 -- small
+    >65.5 & <= 161.5 -- medium
+    >161.5 large
+4. Do the same with ifelse() in one step.
+
+```{r}
+
+```
+
+
+## For, while loop
+
+1. for each tree (1 to 5), print the ages. 
+2. for each tree, print the age, in which they were small. 
+3. load esoph dataset. 
+4. Using for loop(s), summarize ncontrols by agegp and alcgp, skipping the category alcgp=="120+" & agegp=="25-34".
+5. Using a for loop simulate the flip a coin twenty times, keeping track of the individual outcomes (1 = heads, 0 = tails) in a vector that you preallocte.
+6. Use a while loop to investigate the number of terms required before the product 1*2*3*4*... reaches above 10 million
+7. Use a nested for loop (a for loop inside a for loop) that produces the following matrix, preallocate the matrix with NA values.
+
+```{r}
+
+# 0     1     2     3     4
+# 1     0     1     2     3
+# 2     1     0     1     2
+# 3     2     1     0     1
+# 4     3     2     1     0
+
+```
+
+
+
