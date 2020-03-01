@@ -1,6 +1,11 @@
 ---
 title: "Data cleaning, tidy data"
-output: html_notebook
+output: 
+  html_document:
+    highlight: tango
+    toc: true
+    toc_float:
+      collapsed: true
 ---
 
 

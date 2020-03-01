@@ -1,6 +1,11 @@
 ---
 title: "Practice, control structures"
-output: html_notebook
+output: 
+  html_document:
+    highlight: tango
+    toc: true
+    toc_float:
+      collapsed: true
 ---
 
 ## If-else statement
