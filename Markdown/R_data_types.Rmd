@@ -224,6 +224,7 @@ a <- c()
 # integer vector
 
 a <- c(1L,2L,3L)
+a <- 1:3
 
 typeof(a)
 class(a)
@@ -305,7 +306,7 @@ It is used for categorical variables. It is internally represented as integers, 
 
 ```{r}
 
-a <- factor(c("a", "b", "c"), levels = c("a", "b", "c", "d"))
+a <- factor(c("a", "b", "c", "a"), levels = c("a", "b", "c", "d"))
 a
 
 class(a)
@@ -354,19 +355,19 @@ Similar to vectors, but can take lists as elements. The elements can have differ
 
 ```{r}
 
-a <- list(1,2,3)
+a <- list(c(1, 2),2,3)
 a
 
 a <- list(c(1:4), "two", "three")
 a
 
-a <- list(list(1:4), "two", "three")
+a <- list(list(c(1, 2),2,3,4), "two", "three")
 a
 
 #can have names
 
-a <- list(numbers=list(1:4),letters=c("two", "three"))
-a
+b <- list(numbers=c(1:4),letters=c("two", "three"))
+
 
 #referring to an element/subsetting
 
@@ -374,7 +375,7 @@ a[[1]]
 a[[1]][[1]]
 a[[1]][[1]][1]
 
-a$letters[1]
+b$letters[1]
 
 #functions
 
@@ -429,9 +430,15 @@ colSums(num_mat)
 
 ## Data frame
 
+2D object type. Rows and columns with names. The columns can have different element types. 
+
 
 ```{r}
 
+df <- data.frame(value=c(1,2,3), "First name"=as.factor(c("John", "John", "Peter")), last_name=as.factor(c("Smith", "Black", "Rabbit")), row.names = c("Patient 1", "Patient 2", "Patient 3"))
+
+
+df[1:2,]
 
 
 ```

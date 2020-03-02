@@ -52,3 +52,8 @@ $$\overline{x}=\frac{\sum_{i}^{n}x_{i}}n$$
 
 7. Add errors is the checking codes fail. 
 
+```{r}
+
+```
+
+
