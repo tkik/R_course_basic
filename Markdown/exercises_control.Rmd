@@ -19,6 +19,27 @@ output:
 4. Do the same with ifelse() in one step.
 
 ```{r}
+data("Orange")
+
+Hmisc::describe(Orange)
+
+Orange$cc <- NA
+#Orange$tree <- "something else"
+
+for (i in 1:nrow(Orange)){
+  print(i)
+if (Orange$circumference[i] <= 65.5){
+  Orange$cc[i] <- "small"
+} else if (Orange$circumference[i]>65.5 & Orange$circumference<=161.5){
+  Orange$cc[i] <- "medium"
+} else {
+  Orange$cc[i] <- "large"
+}
+}
+
+Orange$cc <- ifelse(Orange$circumference<=65.5, "small", 
+                    ifelse(Orange$circumference<=161.5, "medium", "large"))
+
 
 ```
 
@@ -35,11 +56,34 @@ output:
 
 ```{r}
 
+Orange[Orange$Tree==1,"age"]
+
+for (i in 1:5){
+  cat("Tree: ", i, " Ages: ", paste0(Orange[Orange$Tree==i,"age"], collapse = ", "), "\n")
+}
+
+for (i in 1:5){
+  cat("Tree: ", i, " was small at age: ", paste0(Orange[Orange$Tree==i & Orange$cc=="small","age"], collapse = ", "), "\n")
+}
+
 # 0     1     2     3     4
 # 1     0     1     2     3
 # 2     1     0     1     2
 # 3     2     1     0     1
 # 4     3     2     1     0
+data("esoph")
+for (agegrp in levels(esoph$agegp)){
+  print(sum(esoph$ncontrols[esoph$agegp==agegrp]))
+}
+
+for (agegrp in levels(esoph$agegp)){
+  for (alcgrp in levels(esoph$alcgp)){
+   #print(agegrp)
+    #print(alcgrp)
+  cat("Age group: ", agegrp, ", alcohol consumption group: ", alcgrp, " number of controls: ", sum(esoph$ncontrols[esoph$alcgp==alcgrp & esoph$agegp==agegrp]), "\n")
+  }
+}
+
 
 ```
 
