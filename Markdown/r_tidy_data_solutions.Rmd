@@ -37,7 +37,7 @@ messy_data$Time.of.death <- as.Date(messy_data$Time.of.death, format="%d-%b-%y")
 
 
 Age <- difftime(messy_data$Date.of.diagnosis,messy_data$Date.of.birth, units = "days")
-Age <- round(Age/365, digits = )
+Age <- round(Age/365, digits = 0)
 table(Age,messy_data$Age)
 messy_data$Age <- Age
 

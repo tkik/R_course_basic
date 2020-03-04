@@ -20,8 +20,26 @@ Exercise
 
 1. Clean up the following dataset, using base R:
 messy_data.xlsx
+messy_data.txt
+
 
 ```{r}
+messy_data <- read.delim("~/GitHub/R_course_basic/data/messy_data.txt")
+
+messy_data$Patient.id <- toupper(messy_data$Patient.id)
+messy_data$Patient.id <- gsub(" ", "_", messy_data$Patient.id)
+messy_data <- messy_data[1:18,]
+
+messy_data$X <- NULL
+
+Sys.setlocale("LC_TIME", "English")
+#help: https://www.stat.berkeley.edu/~s133/dates.html
+messy_data$Date.of.surgery <- as.Date(messy_data$Date.of.surgery, format="%d-%b-%y")
+messy_data$Date.of.birth <- as.Date(as.Date( messy_data$Date.of.birth, format="%d/%m/%Y"))
+messy_data$Date.of.diagnosis <- as.Date(messy_data$Date.of.diagnosis, format="%d/%m/%Y")
+messy_data$Time.of.death <- as.Date(messy_data$Time.of.death, format="%d-%b-%y")
+
+
 
 ```
 
@@ -42,11 +60,12 @@ Examples:
 library(dplyr)
 library(tidyr)
 library(tibble)
+library(magrittr)
 data(mtcars)
 
 mtcars <- as_tibble(rownames_to_column(mtcars))
 
-filtered <-mtcars %>%
+filtered <- mtcars %>%
   filter(gear<5) 
 
 filtered %>% 
@@ -58,7 +77,7 @@ filtered %>%
 mtcars %>%
   filter(gear<5) %>%
   group_by(carb) %>%
-  summarise_all(list(sum=sum, mean=mean))
+  summarise(sum_drat=sum(drat), mean_drat=mean(drat))
 
 mtcars %>%
   mutate(cyl_2=if_else(cyl==8, 7, cyl))
@@ -68,7 +87,7 @@ mtcars %>%
   mutate(gear=gear-1)
 
 mtcars %>%
-  pivot_longer(-cars, names_to = "name", values_to = "values")
+  pivot_longer(-rowname, names_to = "name", values_to = "values")
 
 ```
 
@@ -77,6 +96,22 @@ mtcars %>%
 messy_data.xlsx
 
 ```{r}
+
+messy_data <- messy_data %>% 
+  select_all(~gsub(" ", ".", .))
+
+messy_data <- messy_data %>%
+  mutate(Patient.id=toupper(Patient.id)) %>%
+  mutate(Patient.id=gsub(" ", "_", Patient.id), 
+         Age=round(as.numeric((Date.of.diagnosis-Date.of.birth)/365), digits = 0),
+         N=substr(TNM, 3, 4), 
+         M=substr(TNM, 5, 6), 
+         TNM=NULL)
+         #enzyme.level=if_else(enzyme.level>600, NA, enzyme.level))
+
+
+messy_data$enzyme.level[messy_data$enzyme.level>600] <- NA
+
 
 ```
 

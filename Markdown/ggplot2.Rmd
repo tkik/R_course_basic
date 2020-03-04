@@ -43,11 +43,11 @@ library(ggplot2)
 ggplot(housing, aes(x = Home.Value)) +
   geom_histogram()
 
-ggplot(filter(housing, State %in% c("MA", "TX")),
-       aes(x=Date,
-           y=Home.Value,
-           color=State))+
-  geom_point()
+ggplot(filter(housing, State %in% c("MA", "TX")))+
+  geom_point(aes(x=Date,
+           y=Home.Value), color="red")+
+  geom_point(aes(x=Date,
+           y=Home.Value), color="black")
 
 
 ```
@@ -251,6 +251,15 @@ ggplot(home.land.byyear,
 11. Change the theme to theme_bw
 ```{r}
 data(iris)
+
+ggplot(iris, aes(Sepal.Length, Sepal.Width, color=Species))+
+  geom_point()+
+  geom_smooth(method="lm")
+
+ggplot(iris, aes(y=Sepal.Length, x=Species, fill=Species))+
+  geom_boxplot()+
+  scale_fill_manual(values = c(alpha("mediumseagreen", alpha = 0.4), "mediumorchid4", "firebrick1"))+
+  geom_dotplot(binaxis = "y", fill="black", binwidth = 0.05)
 
 ```
 
