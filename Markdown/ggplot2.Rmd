@@ -31,7 +31,7 @@ https://tutorials.iq.harvard.edu/R/Rgraphics/Rgraphics.html#geometric_objects_an
 library(tidyr)
 library(dplyr)
 library(readr)
-
+library(plotly)
 housing <- read_csv("../data/landdata-states.csv")
 
 
@@ -219,6 +219,7 @@ theme_new <- theme_bw() +
         strip.background = element_rect(fill = "orange"))
 
 p5 + theme_new
+
 ```
 
 ```{r}
@@ -250,6 +251,7 @@ ggplot(home.land.byyear,
 10 Flip the coordinates
 11. Change the theme to theme_bw
 ```{r}
+
 data(iris)
 
 ```
