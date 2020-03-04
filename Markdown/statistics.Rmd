@@ -9,8 +9,15 @@ output:
 ---
 
 ```{r}
+<<<<<<< HEAD
 library(ggpubr)
 data("HairEyeColor")
+=======
+
+#install.packages(c("performance", "see"))
+library("performance")
+data("mtcars")
+>>>>>>> 2d35458b31c03d7adf9338c5fe5339d389e2749d
 
 ch <- chisq.test(x = HairEyeColor[,,1])
 ch
@@ -57,10 +64,13 @@ data("mtcars")
 lm(wt~vs, data=mtcars)
 res <- lm(wt~vs+am, data=mtcars)
 summary(res)
+check_model(res)
 
 #logistic regression
-res <- glm(am ~ hp + wt, data=mtcars,family = binomial(link = "logit"))
-summary(res)
+res2 <- glm(am ~ hp + wt, data=mtcars,family = binomial(link = "logit"))
+summary(res2)
+check_model(res2)
+
 
 #anova
 library(stats)
