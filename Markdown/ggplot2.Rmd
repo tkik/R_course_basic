@@ -248,10 +248,10 @@ ggplot(home.land.byyear,
 8. Change the colors to red, blue and green.
 9. change axis labels
 10 Flip the coordinates
+11. Change the theme to theme_bw
 ```{r}
 data(iris)
 
 ```
 
-# Examples with mtcars
 

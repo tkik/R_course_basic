@@ -1,0 +1,43 @@
+---
+title: "Practice, statistics"
+output: 
+  html_document:
+    highlight: tango
+    toc: true
+    toc_float:
+      collapsed: true
+---
+
+```{r}
+data("mtcars")
+
+chisq.test( table(mtcars$vs, mtcars$am))
+
+#correlation
+cor.test(mtcars$hp, mtcars$drat)
+#t.test
+t.test(mtcars$wt[mtcars$vs==0], mtcars$wt[mtcars$vs==1])
+t.test(wt~vs, data=mtcars)
+
+#linear regression
+
+lm(wt~vs, data=mtcars)
+res <- lm(wt~vs+am, data=mtcars)
+summary(res)
+
+#logistic regression
+res <- glm(am ~ hp + wt, data=mtcars,family = binomial(link = "logit"))
+summary(res)
+
+```
+```{r}
+install.packages("dslabs")
+library(dslabs)
+
+data(research_funding_rates)
+attach(research_funding_rates)
+
+#chisq test by discipline
+
+```
+

@@ -17,8 +17,9 @@ Exercise
 messy_data.xlsx
 
 ```{r}
+Sys.setlocale("LC_TIME", "English")
 
-messy_data <- read.delim("V:/Reka/Teaching/R_course/data/messy_data.txt")
+messy_data <- read.delim("../data/messy_data.txt", stringsAsFactors = F)
 
 messy_data$Patient.id <- toupper(messy_data$Patient.id)
 messy_data$Patient.id <- gsub("TCGA ", "TCGA_", messy_data$Patient.id)
@@ -44,7 +45,8 @@ messy_data$Gender
 messy_data$Status
 
 table(messy_data$Status, messy_data$Censor)
-messy_data$Identifier < NULL
+messy_data$Identifier <- NULL
+messy_data$Classification <- NULL
 
 summary(messy_data$enzyme.level)
 boxplot(messy_data$enzyme.level)
@@ -54,10 +56,12 @@ table(messy_data$Histological.subtype)
 messy_data$Histological.subtype <- gsub(" ", "", messy_data$Histological.subtype)
 table(messy_data$Histological.subtype)
 
+table(messy_data$MUC1)
 
-
-
-
+messy_data$MUC1 <- factor(messy_data$MUC1, levels = c("0", "0bis1", "1", "2", "3"))
+messy_data$N <- gsub("(T[[:digit:]])(N[[:digit:]])(M[[:digit:]])", "\\2", messy_data$TNM)
+messy_data$M <- gsub("(T[[:digit:]])(N[[:digit:]])(M[[:digit:]])", "\\3", messy_data$TNM)
+messy_data$TNM <- NULL
 
 ```
 
@@ -123,7 +127,6 @@ col_types = c("text", "numeric", "text",
 "text"), n_max = 20)
 
 
-
 messy_data <- messy_data %>%
   select_all(~gsub(" ", ".", .)) %>% 
   mutate(Patient.id= toupper(Patient.id)) %>%
@@ -131,7 +134,11 @@ messy_data <- messy_data %>%
          Identifier=NULL, 
          Classification=NULL, 
          Age=round(difftime(Date.of.diagnosis,Date.of.birth, units = "days")/365, digits = 0), 
-         Histological.subtype <- gsub(" ", "", Histological.subtype))
+         Histological.subtype = gsub(" ", "", Histological.subtype), 
+         MUC1 = factor(MUC1, levels = c("0", "0bis1", "1", "2", "3")), 
+         N=gsub("(T[[:digit:]])(N[[:digit:]])(M[[:digit:]])", "\\2", TNM), 
+         M= gsub("(T[[:digit:]])(N[[:digit:]])(M[[:digit:]])", "\\3", TNM), TNM = NULL)
+
 
 ```
 

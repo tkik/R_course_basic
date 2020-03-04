@@ -69,6 +69,7 @@ Arguments
 
 f <- function(num1, num2=3){
   print(num1)
+  #browser()
   print(num2)
 }
 f(1,2)
@@ -120,3 +121,4 @@ Useful functions:
 `browser()`
 `debug()`
 `options(error=recover)`
+options(error=stop)
