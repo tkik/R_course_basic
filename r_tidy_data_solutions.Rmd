@@ -1,0 +1,141 @@
+---
+title: "Data cleaning, tidy data"
+output: html_notebook
+---
+
+
+## Clean data:
+- one data, one variable
+- one row per observation
+- data and type matches
+- same name for same categories
+- clean factors, if necessary
+
+Exercise
+
+1. Clean up the following dataset, using base R:
+messy_data.xlsx
+
+```{r}
+
+messy_data <- read.delim("V:/Reka/Teaching/R_course/data/messy_data.txt")
+
+messy_data$Patient.id <- toupper(messy_data$Patient.id)
+messy_data$Patient.id <- gsub("TCGA ", "TCGA_", messy_data$Patient.id)
+messy_data <- messy_data[1:18,]
+messy_data <- messy_data[,colnames(messy_data)!="X"]
+
+
+
+summary(messy_data)
+#help: https://www.stat.berkeley.edu/~s133/dates.html
+messy_data$Date.of.surgery <- as.Date(messy_data$Date.of.surgery, format="%d-%b-%y")
+messy_data$Date.of.birth <- as.Date(as.Date( messy_data$Date.of.birth, format="%d/%m/%Y"))
+messy_data$Date.of.diagnosis <- as.Date(messy_data$Date.of.diagnosis, format="%d/%m/%Y")
+messy_data$Time.of.death <- as.Date(messy_data$Time.of.death, format="%d-%b-%y")
+
+
+Age <- difftime(messy_data$Date.of.diagnosis,messy_data$Date.of.birth, units = "days")
+Age <- round(Age/365, digits = )
+table(Age,messy_data$Age)
+messy_data$Age <- Age
+
+messy_data$Gender
+messy_data$Status
+
+table(messy_data$Status, messy_data$Censor)
+messy_data$Identifier < NULL
+
+summary(messy_data$enzyme.level)
+boxplot(messy_data$enzyme.level)
+messy_data$enzyme.level[messy_data$enzyme.level>600] <- NA
+boxplot(messy_data$enzyme.level)
+table(messy_data$Histological.subtype)
+messy_data$Histological.subtype <- gsub(" ", "", messy_data$Histological.subtype)
+table(messy_data$Histological.subtype)
+
+
+
+
+
+
+```
+
+
+
+## Tidy data
+
+by Hadley Wickham
+- long over wide format
+- data is in tibbles
+- tidyverse offers various functions to easily manipulate the data
+- new concept: piping.
+
+Examples:
+
+
+```{r}
+library(dplyr)
+library(tidyr)
+library(tibble)
+data(mtcars)
+
+mtcars <- as_tibble(rownames_to_column(mtcars))
+
+filtered <-mtcars %>%
+  filter(gear<5) 
+
+filtered %>% 
+  group_by(carb) %>%
+  summarise(qsec_mean=mean(qsec))
+
+#it is possible to combine as many steps as needed without saving it in a separate object
+
+mtcars %>%
+  filter(gear<5) %>%
+  group_by(carb) %>%
+  summarise(sum_drat=sum(drat), mean_drat=mean(drat))
+
+mtcars %>%
+  mutate(cyl_2=if_else(cyl==8, 7, cyl))
+
+
+mtcars %>%
+  mutate(gear=gear-1)
+
+mtcars %>%
+  pivot_longer(-rowname, names_to = "name", values_to = "values")
+
+```
+
+
+2. Clean up the following dataset, using as much tidyverse as possible:
+messy_data.xlsx
+
+```{r}
+
+messy_data <- as.data.frame(read_excel("../data/messy_data.xlsx", 
+     col_types = c("text", "numeric", "text", 
+         "date", "date", "text", "text", "text", 
+         "date", "numeric", "text", "text", 
+         "numeric", "text", "text", "text", 
+         "text", "text", "skip"), n_max = 20))
+
+
+
+```
+
+
+## Merging data
+
+`merge()` funtction from base R
+`join()` function from tidyvers
+
+```{r}
+
+band_members %>% full_join(band_instruments)
+
+merge(band_members, band_instruments, by="name", all=T, sort=F)
+
+```
+
