@@ -9,15 +9,21 @@ output:
 ---
 
 ```{r}
-<<<<<<< HEAD
+
 library(ggpubr)
+library(oddsratio)
+library("performance")
+library(stats)
+library(ggplot2)
+library(dslabs)
+
 data("HairEyeColor")
-=======
+
 
 #install.packages(c("performance", "see"))
-library("performance")
+
 data("mtcars")
->>>>>>> 2d35458b31c03d7adf9338c5fe5339d389e2749d
+
 
 ch <- chisq.test(x = HairEyeColor[,,1])
 ch
@@ -64,24 +70,25 @@ data("mtcars")
 lm(wt~vs, data=mtcars)
 res <- lm(wt~vs+am, data=mtcars)
 summary(res)
+plot(res)
 check_model(res)
 
 #logistic regression
-res2 <- glm(am ~ hp + wt, data=mtcars,family = binomial(link = "logit"))
-summary(res2)
-check_model(res2)
+data("data_glm")
 
+fit_glm <- glm(admit ~ gre + gpa + rank, data = data_glm, family = "binomial") 
 
-#anova
-library(stats)
-library(ggplot2)
-ggplot(PlantGrowth)+
-  geom_boxplot(aes(group, weight))+ylab("Dried weight of plants")
+summary(fit_glm)
+check_model(fit_glm)
+
+or_glm(data = data_glm, model = fit_glm, 
+       incr = list(gre = 380, gpa = 5))
+
 
 ```
 ```{r}
 #install.packages("dslabs")
-library(dslabs)
+
 
 data(research_funding_rates)
 attach(research_funding_rates)
@@ -89,17 +96,22 @@ attach(research_funding_rates)
 
 ```
 1. perform chisq test by discipline
-
 2. linear regression:
 get the cleaned messy dataset
 Perform linear regression en enzyme level and Age. Adjutst for gender.
+Check the resulted model
 3 Plot the data
-4. Perform anova on enzyme level and T stage
-plot the results
-5. Perform t-test on enzyme level and N stage.
+4. Perform t-test on enzyme level and N stage.
 plot the results.
+5. Perform anova on the weight of the plants using the PlantGrowth dataset
+6. Plot the results.
+
+
 
 ```{r}
+#anova
+data("PlantGrowth")
+
 
 ```
 
