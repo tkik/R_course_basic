@@ -16,31 +16,32 @@ library("performance")
 library(stats)
 library(ggplot2)
 library(dslabs)
+library(see)
 
 data("HairEyeColor")
-
+data("mtcars")
+data("ToothGrowth")
 
 #install.packages(c("performance", "see"))
-
-data("mtcars")
-
 
 ch <- chisq.test(x = HairEyeColor[,,1])
 ch
 ch <- fisher.test(x = HairEyeColor[1:2,1:2,1])
 ch
- 
+ch$p.value 
 
-data("ToothGrowth")
-data("mtcars")
-#correlation
-ggplot(mtcars)+
-  geom_point(aes(hp, drat))
-cor.test(mtcars$hp, mtcars$drat)
 
 #t.test/wilcox.test
 ToothGrowth$supp <- as.factor(ToothGrowth$supp)
-t.test(len ~ supp, data = ToothGrowth)
+
+var.test(len~supp, data=ToothGrowth)
+var.test(ToothGrowth$len[ToothGrowth$supp=="OJ"], 
+         ToothGrowth$len[ToothGrowth$supp=="VC"])
+shapiro.test(ToothGrowth$len[ToothGrowth$supp=="OJ"])
+shapiro.test(ToothGrowth$len[ToothGrowth$supp=="VC"])
+
+
+t <- t.test(len ~ supp, data = ToothGrowth, var.equal=T)
 wilcox.test(len ~ supp, data = ToothGrowth)
 
 p <- ggplot(ToothGrowth, aes(x = supp, y = len,
@@ -52,11 +53,10 @@ p + stat_compare_means()
 p + stat_compare_means(method = "t.test")
 
 #anova and Kruskal-Wallis
-
+ToothGrowth$dose <- as.factor(ToothGrowth$dose)
 summary(aov(len~dose, data = ToothGrowth))
 kruskal.test(len~dose, data = ToothGrowth)
 
-ToothGrowth$dose <- as.factor(ToothGrowth$dose)
 my_comparisons <- list( c("0.5", "1"), c("1", "2"), c("0.5", "2") )
 ggplot(ToothGrowth, aes(x = dose, y = len,
           color = dose))+
@@ -64,11 +64,18 @@ ggplot(ToothGrowth, aes(x = dose, y = len,
   stat_compare_means(comparisons = my_comparisons, method = "t.test")+ # Add pairwise comparisons p-value
   stat_compare_means(label.y = 50, method = "anova") 
 
+#correlation
+ggplot(mtcars)+
+  geom_point(aes(hp, drat))
+cor.test(mtcars$hp, mtcars$drat)
+
 
 #linear regression
-data("mtcars")
-lm(wt~vs, data=mtcars)
+lm(hp~drat, data=mtcars)
 res <- lm(wt~vs+am, data=mtcars)
+res <- lm(wt~vs+am+vs:am, data = mtcars)
+
+
 summary(res)
 plot(res)
 check_model(res)
@@ -86,21 +93,12 @@ or_glm(data = data_glm, model = fit_glm,
 
 
 ```
-```{r}
-#install.packages("dslabs")
 
-
-data(research_funding_rates)
-attach(research_funding_rates)
-
-
-```
-1. perform chisq test by discipline
 2. linear regression:
 get the cleaned messy dataset
-Perform linear regression en enzyme level and Age. Adjutst for gender.
-Check the resulted model
-3 Plot the data
+Perform linear regression on enzyme level and Age. Adjutst for gender.
+Check the resulted model.
+3 Plot the data.
 4. Perform t-test on enzyme level and N stage.
 plot the results.
 5. Perform anova on the weight of the plants using the PlantGrowth dataset
@@ -109,8 +107,37 @@ plot the results.
 
 
 ```{r}
+#messy_data, created by r_tidy_data.Rmd
+
+write.table(messy_data, file = "../data/messy_data_cleaned.txt", sep="\t", row.names = F, quote = F)
+save(messy_data, file="../data/messy_data_cleaned.RData")
+saveRDS(messy_data,"../data/messy_data_cleaned.RDS")
+
+load(file="../data/messy_data_cleaned.RData")
+new_messy_data <- readRDS("../data/messy_data_cleaned.RDS")
+
+fit <- lm(enzyme.level~Age+Gender, data=messy_data)
+check_model(fit)
+
+ggplot(messy_data, aes(x=Age, y=enzyme.level, color=Gender))+
+  geom_point()+
+  geom_smooth(method="lm")
+
+t.res <- t.test(enzyme.level~N, data = messy_data)
+ggplot(messy_data, aes(x=N, y=enzyme.level))+
+  geom_boxplot()+
+  stat_compare_means(method="t.test")
+
 #anova
 data("PlantGrowth")
+
+summary(aov(weight~group, data=PlantGrowth))
+
+ggplot(PlantGrowth, aes(x=group, y=weight))+
+  geom_boxplot()+
+  stat_compare_means(method="anova")
+
+
 
 
 ```
