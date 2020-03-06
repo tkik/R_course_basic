@@ -1,0 +1,115 @@
+---
+title: "Reproducible programmin"
+output: 
+  html_document:
+    highlight: tango
+    toc: true
+    toc_float:
+      collapsed: true
+---
+
+# Reproducible programming
+
+## General rules
+
+- the scripts should be written in a way, that either you, or someone else will be able to run it anytime.
+- Clean structure, accordig to the best programming practices
+- comment your codes in detail
+- Use sessionInfo() to know your package versions
+- Use as generalized code as possible - use names and regular expressions instead of indices. 
+- if possible, define your paths at the beginning and use paste() or file.path() later. 
+- try to do everything from R, because changes in e.g. excel are undocumented.
+
+## Use version control
+
+- git is an easy tool to do version control.
+![Git structure](/Users/c010-admin/Documents/R_course_basic-master/pictures/git-basics-7-728.jpg)
+![Git lifecycle](/Users/c010-admin/Documents/R_course_basic-master/pictures/lifecycle.png)
+
+
+```{r}
+
+```
+
+
+## Rmarkdown, R notebooks
+
+- Rmarkdown document, with code chuncks
+- Markdown language is easy to learn, see the cheatsheat
+- many templates available - flexible themes
+- Description, codes and figures at the same place. 
+- Figures are saved separately as well.
+- Appearance of the code depends on the chunk options.
+
+Show code and output
+
+```{r}
+plot(cars)
+```
+
+Show only output
+
+```{r echo=FALSE}
+plot(cars)
+```
+
+Show code only, don't run
+
+```{r eval=FALSE}
+plot(cars)
+```
+
+- Suppress warnings and messages, if needed.
+- Use cheatsheets
+- easy to add pictures, links, etc.
+- easy to add nice tables
+
+```{r, results='asis'}
+library(dplyr)
+data("mtcars")
+knitr::kable(mtcars, format = "html")
+print(xtable::xtable(mtcars), type = 'html')
+
+ mtcars %>%
+ 	DT::datatable(filter = 'top', 
+          options = list(scrollX = TRUE, keys = TRUE, pageLength = 5),  
+          rownames = FALSE)
+
+
+
+```
+
+
+## workflowr package
+- does the above steps automatically
+- keeps a nice folder structure
+- easy to use git 
+
+
+# Exercises:
+
+- set up git with Rstudio
+- set up your github account with workflowr
+- create a new project using wflow_start()
+- create a new markdown file in the analysis folder, my_first_project
+- using TCGAbiolinks, download clinical data for TCGA-LUAD
+<https://bioconductor.org/packages/release/bioc/vignettes/TCGAbiolinks/inst/doc/clinical.html#clinical_indexed_data>
+- delete empty columns using a for cycle and if statements. 
+- Create tables for age, gender, race and stage
+- do chi-sq test for stage and gender. Plot the data (e.g. barplot, counts by gender)
+- do linear regression for the smoking related variables and stage, gender and age. show the results in table. Plot the data.
+- do survival analysis on the data for stages and for gender
+<https://bioconductor.org/packages/release/bioc/vignettes/TCGAbiolinks/inst/doc/analysis.html#tcgaanalyze_survival:_survival_analysis>
+- Add code_hero_rstats.png to the end of your report (pictures) folder.
+- 
+
+
+
+
+
+
+
+
+
+
+
