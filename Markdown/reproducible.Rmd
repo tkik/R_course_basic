@@ -1,5 +1,5 @@
 ---
-title: "Reproducible programmin"
+title: "Reproducible programming"
 output: 
   html_document:
     highlight: tango
@@ -95,6 +95,7 @@ print(xtable::xtable(mtcars), type = 'html')
 - using TCGAbiolinks, download clinical data for TCGA-LUAD
 <https://bioconductor.org/packages/release/bioc/vignettes/TCGAbiolinks/inst/doc/clinical.html#clinical_indexed_data>
 - delete empty columns using a for cycle and if statements. 
+- modify days since birth that it appears in years. google the exact number of days in a year. 
 - Create tables for age, gender, race and stage
 - do chi-sq test for stage and gender. Plot the data (e.g. barplot, counts by gender)
 - do linear regression for the smoking related variables and stage, gender and age. show the results in table. Plot the data.
